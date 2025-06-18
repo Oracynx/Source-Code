@@ -1,8 +1,8 @@
-# OI Source Code by CodingOIer
+# OI Source Code by Oracynx
 
-存放了 CodingOIer 在 OI 竞赛中的源代码
+存放了 Oracynx 在 OI 竞赛中的源代码
 
-从一切的开始到现在，这里已经存放了 CodingOIer 写的 {main} 个主函数，{var} 个变量，{line} 行代码，{char} 个字符了。
+从一切的开始到现在，这里已经存放了 Oracynx 写的 {main} 个主函数，{var} 个变量，{line} 行代码，{char} 个字符了。
 
 ## 目录结构
 
