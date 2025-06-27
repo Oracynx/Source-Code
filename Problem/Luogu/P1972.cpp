@@ -1,73 +1,61 @@
-#include <algorithm>
-#include <cmath>
 #include <cstdio>
 #include <tuple>
 #include <vector>
 constexpr int MaxN = 1e6 + 5;
-int n, q;
-int block;
+int n, m;
 int p[MaxN];
-int ref[MaxN];
-int have[MaxN];
+int tree[MaxN];
+int last[MaxN];
 int answer[MaxN];
-std::vector<std::tuple<int, int, int>> v;
+std::vector<std::tuple<int, int>> v[MaxN];
+void change(int x, int val)
+{
+    for (; x <= n; x += x & -x)
+    {
+        tree[x] += val;
+    }
+}
+int query(int x)
+{
+    int result = 0;
+    for (; x >= 1; x -= x & -x)
+    {
+        result += tree[x];
+    }
+    return result;
+}
+int query(int l, int r)
+{
+    return query(r) - query(l - 1);
+}
 int main()
 {
     scanf("%d", &n);
-    block = std::sqrt(n);
-    int cnt = 0;
     for (int i = 1; i <= n; i++)
     {
         scanf("%d", &p[i]);
-        ref[p[i]] = ref[p[i]] == 0 ? ++cnt : ref[p[i]];
-        p[i] = ref[p[i]];
     }
-    scanf("%d", &q);
-    for (int i = 1; i <= q; i++)
+    scanf("%d", &m);
+    for (int i = 1; i <= m; i++)
     {
         int l, r;
         scanf("%d%d", &l, &r);
-        v.push_back({l, r, i});
+        v[r].push_back({l, i});
     }
-    std::sort(v.begin(), v.end(), [](const std::tuple<int, int, int> x, const std::tuple<int, int, int> y) -> bool {
-        return std::get<0>(x) / block == std::get<0>(y) / block
-                   ? (std::get<1>(x) == std::get<1>(y) ? false : (std::get<0>(x) / block) % 2 == 1) ^
-                         (std::get<1>(x) < std::get<1>(y))
-                   : std::get<0>(x) < std::get<0>(y);
-    });
-    int l, r;
-    int res = 1;
-    l = r = 1;
-    have[p[1]] = 1;
-    for (auto [wantL, wantR, id] : v)
+    for (int r = 1; r <= n; r++)
     {
-        for (; wantL < l;)
+        if (last[p[r]] != 0)
         {
-            l--;
-            have[p[l]]++;
-            res += have[p[l]] == 1 ? 1 : 0;
+            change(last[p[r]], -1);
         }
-        for (; r < wantR;)
+        change(r, 1);
+        last[p[r]] = r;
+        for (const auto &[l, id] : v[r])
         {
-            r++;
-            have[p[r]]++;
-            res += have[p[r]] == 1 ? 1 : 0;
+            answer[id] = query(l, r);
         }
-        for (; l < wantL;)
-        {
-            have[p[l]]--;
-            res -= have[p[l]] == 0 ? 1 : 0;
-            l++;
-        }
-        for (; wantR < r;)
-        {
-            have[p[r]]--;
-            res -= have[p[r]] == 0 ? 1 : 0;
-            r--;
-        }
-        answer[id] = res;
     }
-    for (int i = 1; i <= q; i++)
+    for (int i = 1; i <= m; i++)
     {
         printf("%d\n", answer[i]);
     }
