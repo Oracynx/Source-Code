@@ -4,7 +4,7 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
+            "name": "C/C++ Debugger",
             "program": "${workspaceFolder}/.build/${fileBasenameNoExtension}",
             "args": [],
             "cwd": "${workspaceFolder}",
