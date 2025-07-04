@@ -48,6 +48,7 @@ template <typename tp, int tableSize> class table
 int n;
 int answer;
 int p;
+int state[MaxN];
 table<int, int(5e6 + 7)> map;
 int dfs(int x)
 {
@@ -71,8 +72,6 @@ int dfs(int x)
 }
 int main()
 {
-    freopen("emperor.in", "r", stdin);
-    freopen("emperor.out", "w", stdout);
     scanf("%d%d", &n, &p);
     for (int i = 2; i <= n; i++)
     {
