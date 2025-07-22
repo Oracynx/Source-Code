@@ -13,7 +13,7 @@ jobs:
   daily-summary:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 仓库
+      - name: Checkout 完整历史
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -25,15 +25,15 @@ jobs:
 
       - name: 生成提交摘要并调用 DeepSeek
         run: ./.github/scripts/generate_summary.sh
+        env:
+          DEEPSEEK_API_URL: ${{ secrets.DEEPSEEK_API_URL }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_PROMPT: ${{ secrets.DEEPSEEK_PROMPT }}
+          DEEPSEEK_MODEL: ${{ secrets.DEEPSEEK_MODEL }}  # 如果有
 
       - name: 通过 SMTP 发送带附件的邮件
         run: python ./.github/scripts/send_email.py
         env:
-          # DeepSeek
-          DEEPISEEK_API_URL: ${{ secrets.DEEPISEEK_API_URL }}
-          DEEPISEEK_API_KEY: ${{ secrets.DEEPISEEK_API_KEY }}
-          DEEPISEEK_PROMPT: ${{ secrets.DEEPISEEK_PROMPT }}
-          # SMTP
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
