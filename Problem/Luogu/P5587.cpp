@@ -1,94 +1,74 @@
 #include <algorithm>
-#include <array>
-#include <bitset>
-#include <cassert>
-#include <chrono>
 #include <cmath>
-#include <complex>
 #include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
 #include <iostream>
-#include <map>
-#include <queue>
-#include <random>
-#include <set>
-#include <stack>
 #include <string>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
-#define debug printf("Debug\n")
-typedef long long ll;
-const int inf = 0x3f3f3f3f;
-const int MaxN = 1e5 + 5;
-const int MaxM = 1e4 + 5;
-int t;
+constexpr int MaxN = 1e4 + 5;
 int n;
-int len;
-int Accepted;
-char word_std[MaxM][MaxN];
-char word_user[MaxM][MaxN];
+int correct;
+std::string s[MaxN];
+std::string t[MaxN];
 int main()
 {
     for (;;)
     {
-        std::cin.getline(word_std[n + 1], MaxN);
-        if (!strcmp(word_std[n + 1], "EFO"))
+        n++;
+        std::getline(std::cin, s[n]);
+        if (s[n] == "EOF")
         {
             break;
         }
-        len = strlen(word_std[n + 1]);
-        n++;
-        for (int i = 0, j = 0; i <= len; i++)
+        std::string temp;
+        for (int i = 0; i < int(s[n].size()); i++)
         {
-            if (word_std[n][i] == '<')
+            if (s[n][i] == '<')
             {
-                j--;
+                if (!temp.empty())
+                {
+                    temp.pop_back();
+                }
             }
             else
             {
-                j++;
-                word_std[n][j] = word_std[n][i];
+                temp.push_back(s[n][i]);
             }
         }
+        s[n] = temp;
     }
-    n = 0;
-    for (;;)
+    n--;
+    for (int i = 1;; i++)
     {
-        std::cin.getline(word_user[n + 1], MaxN);
-        if (!strcmp(word_user[n + 1], "EFO"))
+        std::getline(std::cin, t[i]);
+        if (t[i] == "EOF")
         {
             break;
         }
-        len = strlen(word_std[n + 1]);
-        n++;
-        for (int i = 0, j = 0; i <= len; i++)
+        std::string temp;
+        for (int j = 0; j < int(t[i].size()); j++)
         {
-            if (word_user[n][i] == '<')
+            if (t[i][j] == '<')
             {
-                j--;
+                if (!temp.empty())
+                {
+                    temp.pop_back();
+                }
             }
             else
             {
-                j++;
-                word_user[n][j] = word_user[n][i];
+                temp.push_back(t[i][j]);
             }
         }
-    }
-    for (int i = 1; i <= n; i++)
-    {
-        len = strlen(word_std[i]);
-        for (int j = 0; j < len; j++)
+        t[i] = temp;
+        for (int j = 0; j < int(std::min(s[i].size(), t[i].size())); j++)
         {
-            if (word_std[i][j] == word_user[i][j])
+            if (s[i][j] == t[i][j])
             {
-                Accepted++;
+                correct++;
             }
         }
     }
-    scanf("%d", &t);
-    printf("%.0lf", double(Accepted) / (double(t) / double(60)));
+    int time;
+    scanf("%d", &time);
+    printf("%d\n", int(round(1.0 * correct / time * 60)));
     return 0;
 }
