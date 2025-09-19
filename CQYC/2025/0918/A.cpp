@@ -58,7 +58,7 @@ void solve()
         queue.push(queue.top() - c * n);
         queue.pop();
     }
-    answer = 0;
+    answer = -0x3f3f3f3f'3f3f3f3f;
     for (int i = 0; i <= k; i++)
     {
         answer = std::max(answer, ar[i] + al[k - i] - 1ll * i * (k - i) * c);
