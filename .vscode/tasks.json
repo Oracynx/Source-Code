@@ -10,13 +10,12 @@
                 "${file}",
                 "-o",
                 "${workspaceFolder}/.build/${fileBasenameNoExtension}",
-                "-std=c++17",
+                "-std=c++23",
                 "-DLOCAL",
                 "-Wall",
                 "-Wextra",
                 "-Wpedantic",
                 "-O0",
-                "'-Wl,-stack=998244353'"
             ],
             "options": {
                 "cwd": "${fileDirname}"
