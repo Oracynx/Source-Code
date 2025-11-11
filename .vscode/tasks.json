@@ -16,6 +16,7 @@
                 "-Wextra",
                 "-Wpedantic",
                 "-O0",
+                "'-Wl,-stack=998244353'"
             ],
             "options": {
                 "cwd": "${fileDirname}"
