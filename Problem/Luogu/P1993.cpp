@@ -36,14 +36,6 @@ int main()
             g[v].push_back({u, 0});
         }
     }
-    // Print Edges
-    for (int u = 1; u <= n; u++)
-    {
-        for (const auto &[v, w] : g[u])
-        {
-            printf("%d %d %d\n", u, v, w);
-        }
-    }
     for (int i = 1; i <= n; i++)
     {
         queue.push(i);
